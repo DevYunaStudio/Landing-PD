@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Livello_2" data-name="Livello 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 253.88 78.95">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: 0em;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        fill: #219661;
+      }
+
+      .cls-2 {
+        letter-spacing: 0em;
+      }
+
+      .cls-3 {
+        letter-spacing: 0em;
+      }
+
+      .cls-5 {
+        font-size: 55px;
+      }
+
+      .cls-5, .cls-6 {
+        font-family: Formiga-Bold, Formiga;
+        font-weight: 700;
+      }
+
+      .cls-7, .cls-6, .cls-8, .cls-9 {
+        fill: #1d1d1b;
+      }
+
+      .cls-4 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-6 {
+        font-size: 23px;
+      }
+
+      .cls-10 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-11 {
+        letter-spacing: 0em;
+      }
+
+      .cls-8 {
+        letter-spacing: 0em;
+      }
+
+      .cls-9 {
+        letter-spacing: -.01em;
+      }
+    </style>
+  </defs>
+  <g id="Livello_1-2" data-name="Livello 1">
+    <text class="cls-5" transform="translate(0 48.62)"><tspan class="cls-1" x="0" y="0">a</tspan><tspan class="cls-3" x="34.1" y="0">g</tspan><tspan class="cls-2" x="69.25" y="0">r</tspan><tspan class="cls-4" x="96.47" y="0">o</tspan><tspan class="cls-8" x="130.13" y="0">t</tspan><tspan class="cls-9" x="156.92" y="0">o</tspan><tspan class="cls-7" x="191.23" y="0">ur</tspan></text>
+    <text class="cls-6" transform="translate(182.81 72.86)"><tspan class="cls-11" x="0" y="0">2</tspan><tspan class="cls-10" x="14.88" y="0">0</tspan><tspan class="cls-11" x="30.75" y="0">2</tspan><tspan x="45.63" y="0">6</tspan></text>
+  </g>
+</svg>

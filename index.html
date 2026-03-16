@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agrotour 2026 — Gruppo PD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --green: #2E9E5B;
+            --red:   #D63128;
+            --dark:  #0f0f0f;
+            --white: #ffffff;
+            --cream: #f5f2ed;
+            --nav-h: 64px;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Outfit', sans-serif; color: var(--dark); background: var(--white); overflow-x: hidden; }
+
+        /* ── reveal ── */
+        [data-reveal] { opacity:0; transform:translateY(28px); transition: opacity .65s cubic-bezier(.22,1,.36,1), transform .65s cubic-bezier(.22,1,.36,1); }
+        [data-reveal].in { opacity:1; transform:none; }
+        [data-reveal="0.1"]{ transition-delay:.1s }
+        [data-reveal="0.2"]{ transition-delay:.2s }
+        [data-reveal="0.3"]{ transition-delay:.3s }
+        [data-reveal="0.4"]{ transition-delay:.4s }
+        [data-reveal="0.5"]{ transition-delay:.5s }
+
+        /* ═══════════════════════════
+           NAV
+        ═══════════════════════════ */
+        .nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 200;
+            height: var(--nav-h);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 56px;
+            transition: background .35s ease, box-shadow .35s ease;
+        }
+        .nav.scrolled {
+            background: rgba(10,10,10,0.96);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .nav-logo-text { display:flex; flex-direction:column; line-height:1.2; }
+        .nav-logo-name { font-size:14px; font-weight:900; color:var(--white); letter-spacing:.3px; }
+        .nav-logo-sub  { font-size:8.5px; color:rgba(255,255,255,.55); font-weight:400; }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+        .nav-links a {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.7);
+            text-decoration: none;
+            transition: color .2s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content:'';
+            position:absolute;
+            bottom:-4px; left:0; right:100%;
+            height:1px;
+            background:var(--green);
+            transition:right .25s ease;
+        }
+        .nav-links a:hover { color:var(--white); }
+        .nav-links a:hover::after { right:0; }
+        .nav-links a.active { color:var(--white); }
+        .nav-links a.active::after { right:0; }
+
+        /* Hamburger */
+        .nav-burger {
+            display:none;
+            flex-direction:column;
+            justify-content:center;
+            gap:5px;
+            width:32px; height:32px;
+            cursor:pointer;
+            background:none; border:none; padding:0;
+            position:relative;
+            z-index:110;
+        }
+        .nav-burger span {
+            display:block; width:22px; height:2px;
+            background:var(--white); border-radius:2px;
+            transition:transform .3s, opacity .3s;
+        }
+        .nav-burger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+        .nav-burger.open span:nth-child(2) { opacity:0; }
+        .nav-burger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
+        /* ═══════════════════════════
+           HERO
+        ═══════════════════════════ */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 640px;
+            display: flex;
+            flex-direction: column;
+        }
+        .hero-img {
+            position:absolute; inset:0;
+            background:url('assets/caroline-roose-hQFEUN2Upzw-unsplash.jpg') center 40%/cover no-repeat;
+        }
+        .hero-img::after {
+            content:'';
+            position:absolute; inset:0;
+            background: linear-gradient(to bottom, rgba(18,72,40,.85) 0%, rgba(15,15,15,.8) 100%);
+        }
+        .hero-body {
+            position:relative; z-index:2;
+            flex:1;
+            display:flex; flex-direction:column;
+            align-items:center; justify-content:center;
+            text-align:center;
+            padding: var(--nav-h) 32px 80px;
+        }
+        .hero-eyebrow {
+            display:flex; align-items:center; gap:12px;
+            margin-bottom:28px;
+        }
+        .hero-eyebrow-line { width:32px; height:1px; background:rgba(255,255,255,.4); }
+        .hero-eyebrow-text { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,.55); }
+        .hero-title {
+            font-size: clamp(80px,13vw,160px);
+            font-weight:900;
+            line-height:.9;
+            letter-spacing:-4px;
+            color:var(--white);
+            margin-bottom:6px;
+        }
+        .hero-title .agro { color:#5ddb8f; }
+        .hero-year {
+            display:block;
+            font-size:clamp(60px,10vw,120px);
+            font-weight:900;
+            letter-spacing:-3px;
+            color:rgba(255,255,255,.2);
+            line-height:1;
+            margin-bottom:32px;
+        }
+        .hero-subtitle {
+            font-size:clamp(16px,1.8vw,20px);
+            font-style:italic;
+            font-weight:300;
+            color:rgba(255,255,255,.75);
+            line-height:1.55;
+        }
+        .hero-scroll {
+            position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
+            z-index:2; display:flex; flex-direction:column; align-items:center; gap:8px;
+        }
+        .hero-scroll span { font-size:9px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:rgba(255,255,255,.35); }
+        .scroll-line { width:1px; height:40px; background:linear-gradient(to bottom,rgba(255,255,255,.5),transparent); animation:drop 1.8s ease-in-out infinite; }
+        @keyframes drop { 0%{transform:scaleY(0);transform-origin:top;opacity:1} 50%{transform:scaleY(1);transform-origin:top;opacity:1} 100%{transform:scaleY(1);transform-origin:top;opacity:0} }
+
+        /* ═══════════════════════════
+           EDITORIAL (COS'È)
+        ═══════════════════════════ */
+        .editorial { background:var(--cream); padding:100px 0; }
+        .container { max-width:840px; margin:0 auto; padding:0 48px; }
+        .section-tag {
+            display:inline-flex; align-items:center; gap:10px;
+            font-size:10px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase;
+            color:var(--green); margin-bottom:32px;
+        }
+        .section-tag::before { content:''; display:block; width:28px; height:2px; background:var(--green); border-radius:2px; }
+        .pull-quote {
+            font-size:clamp(24px,3.2vw,36px);
+            font-weight:700;
+            line-height:1.3;
+            color:var(--dark);
+            border-left:4px solid var(--green);
+            padding-left:32px;
+            margin-bottom:52px;
+        }
+        .body-text { font-size:17px; line-height:1.82; color:#2a2a2a; columns:2; column-gap:48px; }
+        .body-text p { margin-bottom:20px; break-inside:avoid; }
+        .body-text p:last-child { margin-bottom:0; }
+        .body-text strong { font-weight:700; color:var(--dark); }
+
+        /* ═══════════════════════════
+           ATTIVITÀ LEGISLATIVA
+        ═══════════════════════════ */
+        .legis { background:var(--white); padding:100px 64px; }
+        .legis-header { margin-bottom:64px; }
+        .legis-header h2 { font-size:clamp(28px,4vw,48px); font-weight:900; line-height:1.1; }
+        .legis-header h2 em { font-style:normal; color:var(--red); }
+        .legis-header p { font-size:15px; color:#777; margin-top:12px; max-width:500px; line-height:1.6; }
+
+        /* Counters */
+        .counters {
+            display:grid;
+            grid-template-columns:repeat(5,1fr);
+            gap:2px;
+            background:#eee;
+            border:2px solid #eee;
+            margin-bottom:56px;
+        }
+        .counter-item {
+            background:var(--white);
+            padding:36px 24px 32px;
+            text-align:center;
+            cursor:pointer;
+            transition:background .2s;
+            border-bottom:3px solid transparent;
+            transition:background .2s, border-color .2s;
+        }
+        .counter-item:hover { background:#fafafa; }
+        .counter-item.active { border-bottom-color:var(--red); background:#fff8f7; }
+        .counter-num {
+            font-size:clamp(44px,5vw,72px);
+            font-weight:900;
+            color:var(--red);
+            line-height:1;
+            display:block;
+        }
+        .counter-label {
+            font-size:11px;
+            font-weight:700;
+            letter-spacing:1.8px;
+            text-transform:uppercase;
+            color:#888;
+            margin-top:8px;
+            display:block;
+            line-height:1.4;
+            white-space:nowrap;
+        }
+
+        /* Accordion */
+        .accordion { border:1px solid #e8e8e8; border-radius:8px; overflow:hidden; }
+        .acc-panel { border-bottom:1px solid #e8e8e8; }
+        .acc-panel:last-child { border-bottom:none; }
+        .acc-trigger {
+            width:100%;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:22px 28px;
+            background:var(--white);
+            border:none;
+            cursor:pointer;
+            text-align:left;
+            transition:background .2s;
+        }
+        .acc-trigger:hover { background:#fafafa; }
+        .acc-trigger.open { background:#fff8f7; }
+        .acc-trigger-left { display:flex; align-items:center; gap:16px; }
+        .acc-num { display:none; }
+        a.leg-ref { color:var(--red); text-decoration:none; font-size:10.5px; font-weight:600; letter-spacing:.3px; margin-bottom:3px; display:block; transition:color .15s; }
+        a.leg-ref:hover { color:#a02018; text-decoration:underline; }
+        a.odg-code { color:var(--red); text-decoration:none; font-size:12px; font-weight:700; display:block; margin-bottom:3px; transition:color .15s; }
+        a.odg-code:hover { color:#a02018; text-decoration:underline; }
+        .acc-title { font-size:18px; font-weight:800; color:var(--dark); text-transform:uppercase; letter-spacing:1px; }
+        .acc-chevron {
+            width:28px; height:28px; border-radius:50%;
+            background:#f0f0f0;
+            display:flex; align-items:center; justify-content:center;
+            flex-shrink:0;
+            transition:background .2s, transform .3s;
+        }
+        .acc-trigger.open .acc-chevron { background:var(--red); transform:rotate(180deg); }
+        .acc-chevron svg { width:12px; height:12px; fill:none; stroke:#555; stroke-width:2.5; stroke-linecap:round; }
+        .acc-trigger.open .acc-chevron svg { stroke:white; }
+        .acc-body {
+            max-height:0;
+            overflow:hidden;
+            transition:max-height .4s cubic-bezier(.22,1,.36,1);
+        }
+        .acc-body.open { max-height:2400px; }
+        .acc-inner { padding:0 28px 28px; }
+
+        /* Items inside accordion */
+        .leg-list { display:flex; flex-direction:column; gap:0; }
+        .leg-item {
+            padding:16px 0;
+            border-bottom:1px solid #f0f0f0;
+            display:grid;
+            grid-template-columns:110px 1fr;
+            gap:16px;
+            align-items:baseline;
+        }
+        .leg-item:last-child { border-bottom:none; }
+        .leg-date { font-size:12px; font-weight:700; color:var(--red); letter-spacing:.5px; }
+        .leg-content {}
+        .leg-ref { font-size:10.5px; color:#999; font-weight:600; letter-spacing:.3px; margin-bottom:3px; }
+        .leg-title { font-size:15px; font-weight:600; color:var(--dark); line-height:1.4; }
+        .leg-authors { font-size:13px; color:#888; margin-top:4px; }
+
+        /* OdG grouped */
+        .odg-grid { display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+        .odg-deputy h4 { font-size:15px; font-weight:800; color:var(--red); margin-bottom:12px; text-transform:uppercase; letter-spacing:.5px; }
+        .odg-list { display:flex; flex-direction:column; gap:6px; max-height:320px; overflow-y:auto; padding-right:6px; }
+        .odg-list::-webkit-scrollbar { width:3px; }
+        .odg-list::-webkit-scrollbar-track { background:#f0f0f0; }
+        .odg-list::-webkit-scrollbar-thumb { background:var(--red); border-radius:2px; }
+        .odg-item { font-size:15px; color:#444; line-height:1.4; padding:8px 0; border-bottom:1px solid #f5f5f5; }
+        .odg-item:last-child { border-bottom:none; }
+        .odg-code { font-size:12px; font-weight:700; color:var(--red); display:block; margin-bottom:3px; }
+
+        /* ═══════════════════════════
+           EVENTS (LE TAPPE)
+        ═══════════════════════════ */
+        .events { background:var(--red); padding:80px 64px; }
+        .events-top {
+            display:flex; align-items:flex-end; justify-content:space-between;
+            margin-bottom:56px; gap:24px; flex-wrap:wrap;
+        }
+        .events-top-left .kicker {
+            font-size:10px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase;
+            color:rgba(255,255,255,.5); margin-bottom:8px;
+        }
+        .events-top-left h2 { font-size:clamp(28px,4vw,52px); font-weight:900; color:var(--white); line-height:1; letter-spacing:-1px; }
+        .events-top-right {
+            font-size:clamp(26px,3.2vw,38px); font-weight:900; line-height:.95; text-align:right;
+        }
+        .events-top-right .agro { color:rgba(255,255,255,.9); }
+        .events-top-right .tour { color:rgba(255,255,255,.4); }
+        .events-top-right .yr { display:block; font-size:.78em; color:rgba(255,255,255,.25); }
+        .events-dates {
+            font-size:13px; font-weight:500; color:rgba(255,255,255,.55);
+            margin-top:8px; letter-spacing:.5px;
+        }
+
+        .events-grid {
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:16px;
+        }
+        .events-day-label {
+            grid-column:1/-1;
+            display:flex; align-items:center; gap:16px;
+            padding-bottom:6px;
+        }
+        .events-day-label span { font-size:10px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:rgba(255,255,255,.4); white-space:nowrap; }
+        .events-day-label::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.15); }
+        .event-card {
+            background:rgba(255,255,255,.1);
+            border:1px solid rgba(255,255,255,.14);
+            border-radius:12px;
+            padding:28px 24px;
+            transition:background .2s, transform .2s;
+            display:flex; flex-direction:column; gap:6px;
+        }
+        .event-card:hover { background:rgba(255,255,255,.16); transform:translateY(-3px); }
+        .event-time { font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,.5); }
+        .event-pin { display:flex; align-items:center; gap:6px; margin:4px 0 2px; }
+        .event-pin svg { width:14px; height:14px; fill:rgba(255,255,255,.65); flex-shrink:0; }
+        .event-city { font-size:clamp(16px,1.8vw,20px); font-weight:900; color:var(--white); line-height:1.1; }
+        .event-venue { font-size:12.5px; color:rgba(255,255,255,.65); line-height:1.45; }
+
+        /* ═══════════════════════════
+           GRUPPO PD
+        ═══════════════════════════ */
+        .gruppo { background:var(--dark); padding:100px 64px; }
+        .gruppo-top { margin-bottom:64px; }
+        .gruppo-top .kicker { font-size:10px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--green); margin-bottom:16px; }
+        .gruppo-top h2 { font-size:clamp(28px,4vw,48px); font-weight:900; color:var(--white); line-height:1.1; }
+        .gruppo-top h2 span { color:var(--red); }
+        .gruppo-top p { font-size:15px; color:rgba(255,255,255,.5); margin-top:12px; font-style:italic; max-width:480px; line-height:1.6; }
+
+        .deputies-grid {
+            display:grid;
+            grid-template-columns:repeat(5,1fr);
+            gap:20px;
+        }
+        .dep-card {
+            background:rgba(255,255,255,.04);
+            border:1px solid rgba(255,255,255,.08);
+            border-radius:12px;
+            padding:32px 24px 28px;
+            display:flex; flex-direction:column; gap:0;
+            transition:background .2s, border-color .2s, transform .2s;
+        }
+        .dep-card:hover { background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.16); transform:translateY(-4px); }
+        .dep-avatar {
+            width:120px; height:120px; border-radius:50%;
+            background:linear-gradient(135deg,var(--red),#a02018);
+            display:flex; align-items:center; justify-content:center;
+            font-size:20px; font-weight:800; color:var(--white);
+            margin-bottom:18px;
+            letter-spacing:.5px;
+            overflow:hidden;
+        }
+        .dep-avatar img {
+            width:100%; height:100%;
+            object-fit:cover;
+        }
+        .dep-name { font-size:16px; font-weight:800; color:var(--white); line-height:1.25; margin-bottom:5px; }
+        .dep-city { font-size:13px; color:rgba(255,255,255,.4); font-style:italic; margin-bottom:18px; }
+        .dep-contacts { display:flex; flex-direction:column; gap:6px; padding-top:18px; border-top:1px solid rgba(255,255,255,.08); }
+        .dep-contacts a, .dep-contacts span {
+            display:flex; align-items:center; gap:8px;
+            font-size:12px; color:rgba(255,255,255,.5);
+            text-decoration:none; transition:color .15s; font-weight:500;
+        }
+        .dep-contacts a:hover { color:rgba(255,255,255,.9); }
+        .dep-contacts svg { flex-shrink:0; opacity:.5; }
+
+        /* ═══════════════════════════
+           FOOTER
+        ═══════════════════════════ */
+        footer {
+            background:#060606;
+            padding:40px 64px;
+            display:flex; align-items:center; justify-content:space-between;
+            gap:24px; flex-wrap:wrap;
+        }
+        .foot-logo-name { font-size:14px; font-weight:900; color:var(--white); }
+        .foot-logo-sub  { font-size:9px; color:rgba(255,255,255,.3); }
+        .foot-logo-cam  { font-size:9px; font-style:italic; color:rgba(255,255,255,.25); }
+        .foot-copy { font-size:12px; color:rgba(255,255,255,.3); text-align:right; font-style:italic; line-height:1.6; }
+
+        /* ═══════════════════════════
+           RESPONSIVE
+        ═══════════════════════════ */
+        @media(max-width:1200px){
+            .deputies-grid { grid-template-columns:repeat(3,1fr); }
+            .counters { grid-template-columns:repeat(3,1fr); }
+        }
+        @media(max-width:900px){
+            .nav { padding:0 24px; }
+            .nav-links { gap:18px; }
+            .nav-links a { font-size:11px; }
+            .legis { padding:72px 28px; }
+            .events { padding:64px 28px; }
+            .gruppo { padding:80px 28px; }
+            footer { padding:32px 28px; flex-direction:column; }
+            .foot-copy { text-align:left; }
+            .events-grid { grid-template-columns:1fr 1fr; }
+            .deputies-grid { grid-template-columns:repeat(2,1fr); }
+            .odg-grid { grid-template-columns:1fr; }
+            .counters { grid-template-columns:repeat(2,1fr); }
+            .body-text { columns:1; }
+        }
+        @media(max-width:600px){
+            .nav-burger { display:flex; }
+            .nav-links {
+                position:fixed;
+                inset:0;
+                background:rgba(10,10,10,.97);
+                backdrop-filter:blur(16px);
+                flex-direction:column;
+                align-items:center;
+                justify-content:center;
+                gap:32px;
+                opacity:0;
+                pointer-events:none;
+                transition:opacity .3s;
+                z-index:101;
+            }
+            .nav-links.open {
+                opacity:1;
+                pointer-events:auto;
+            }
+            .nav-links a {
+                font-size:18px;
+                letter-spacing:2px;
+            }
+            .events-grid { grid-template-columns:1fr; }
+            .deputies-grid { grid-template-columns:1fr; }
+            .counters { grid-template-columns:1fr 1fr; }
+            .counter-label { font-size:9px; white-space:normal; }
+            .leg-item { grid-template-columns:1fr; gap:4px; }
+            .legis { padding:56px 18px; }
+            .events { padding:48px 18px; }
+            .gruppo { padding:56px 18px; }
+            footer { padding:28px 18px; }
+            .acc-trigger { padding:18px 18px; }
+            .acc-inner { padding:0 18px 18px; }
+            .editorial { padding:64px 0; }
+            .container { padding:0 24px; }
+            .events-top { flex-direction:column; align-items:flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══ NAV ══════════════════════════════════════ -->
+<nav class="nav" id="main-nav">
+    <a href="#cose" class="nav-logo">
+        <img src="assets/gruppopd.svg" alt="Gruppo PD" style="height:38px; filter:brightness(0) invert(1);">
+    </a>
+    <button class="nav-burger" id="nav-burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="nav-links">
+        <a href="#cose">AGROTOUR 2026</a>
+        <a href="#attivita">Attività Legislativa</a>
+        <a href="#tappe">Le Tappe</a>
+        <a href="#gruppo">Il Gruppo PD</a>
+    </div>
+</nav>
+
+<!-- ══ HERO / COS'È ══════════════════════════ -->
+<section id="cose">
+    <div class="hero">
+        <div class="hero-img"></div>
+        <div class="hero-body">
+            <div class="hero-eyebrow" data-reveal>
+                <div class="hero-eyebrow-line"></div>
+                <span class="hero-eyebrow-text">Gruppo PD · Commissione Agricoltura · XIX Legislatura</span>
+                <div class="hero-eyebrow-line"></div>
+            </div>
+            <div data-reveal="0.1">
+                <img src="assets/agrotour.svg" alt="Agrotour 2026" style="width:clamp(280px,45vw,520px); filter:brightness(0) invert(1);">
+            </div>
+            <p class="hero-subtitle" data-reveal="0.2">
+                Viaggio tra le realtà agroalimentari<br>del Paese tra mercati e futuro
+            </p>
+        </div>
+        <div class="hero-scroll">
+            <span>Scopri</span>
+            <div class="scroll-line"></div>
+        </div>
+    </div>
+
+    <div class="editorial">
+        <div class="container">
+            <div class="section-tag" data-reveal>cos'è agrotour</div>
+            <blockquote class="pull-quote" data-reveal="0.1">
+                Nel 2026 il Made in Italy agroalimentare affronta la sfida più difficile degli ultimi anni.<br>Ma ogni crisi è anche un'opportunità.
+            </blockquote>
+            <div class="body-text">
+                <p data-reveal="0.2">L'<strong>agroalimentare italiano</strong> si trova davanti a una sfida decisiva: i <strong>dazi USA al 15%</strong>, il cambio sfavorevole e il rallentamento dei consumi stanno incidendo in modo significativo sul settore, ed in particolare sull'export dei prodotti di qualità.</p>
+                <p data-reveal="0.2">L'anticipo delle spedizioni prima dell'entrata in vigore dei dazi ha saturato i magazzini americani, riducendo la domanda nei mesi successivi.</p>
+                <p data-reveal="0.3">Il <strong>vino</strong>, primo prodotto italiano negli Stati Uniti, è <strong>tra i più colpiti</strong>: nonostante politiche di prezzo aggressive, le vendite hanno registrato una forte contrazione. Più in generale, la crescita dell'export verso gli USA si è quasi azzerata rispetto all'anno precedente, mettendo sotto pressione migliaia di imprese.</p>
+                <p data-reveal="0.3">Oggi più che mai <strong>servono visione, innovazione e presenza su nuovi mercati.</strong> Rafforzare managerialità, promozione e internazionalizzazione significa <strong>difendere il valore del Made in Italy</strong> e trasformare le difficoltà in slancio competitivo.</p>
+                <p data-reveal="0.4">In un contesto europeo segnato da scelte cruciali su PAC e nuovi accordi commerciali, dal MERCOSUR all'accordo UE-India, è fondamentale tutelare qualità e sicurezza alimentare, a partire dagli <strong>857 prodotti DOP e IGP</strong>, e sostenere le imprese che portano l'eccellenza italiana nel mondo.</p>
+                <p data-reveal="0.4">Il futuro dell'agroalimentare passa da qui: <strong>resilienza, promozione, crescita sostenibile.</strong></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ ATTIVITÀ LEGISLATIVA ══════════════════ -->
+<section id="attivita" class="legis">
+    <div class="legis-header" data-reveal>
+        <h2>La nostra <em>Attività Legislativa</em></h2>
+        <p>In Commissione Agricoltura nella XIX Legislatura</p>
+    </div>
+
+    <!-- Counters -->
+    <div class="counters" data-reveal="0.1">
+        <div class="counter-item active" data-target="odg">
+            <span class="counter-num" data-count="79">0</span>
+            <span class="counter-label">Ordini<br>del giorno</span>
+        </div>
+        <div class="counter-item" data-target="pdl">
+            <span class="counter-num" data-count="15">0</span>
+            <span class="counter-label">Proposte<br>di Legge</span>
+        </div>
+        <div class="counter-item" data-target="int">
+            <span class="counter-num" data-count="13">0</span>
+            <span class="counter-label">Interrogazioni</span>
+        </div>
+        <div class="counter-item" data-target="moz">
+            <span class="counter-num" data-count="3">0</span>
+            <span class="counter-label">Mozioni</span>
+        </div>
+        <div class="counter-item" data-target="eve">
+            <span class="counter-num" data-count="5">0</span>
+            <span class="counter-label">Eventi</span>
+        </div>
+    </div>
+
+    <!-- Accordion -->
+    <div class="accordion" data-reveal="0.2">
+
+        <!-- ORDINI DEL GIORNO -->
+        <div class="acc-panel" id="panel-odg">
+            <button class="acc-trigger open" data-panel="odg">
+                <div class="acc-trigger-left">
+                    <span class="acc-num">79</span>
+                    <span class="acc-title">Ordini del giorno</span>
+                </div>
+                <div class="acc-chevron">
+                    <svg viewBox="0 0 12 8"><polyline points="1,1 6,7 11,1"/></svg>
+                </div>
+            </button>
+            <div class="acc-body open" id="body-odg">
+                <div class="acc-inner">
+                    <div class="odg-grid">
+                        <div class="odg-deputy">
+                            <h4>Stefano Vaccari</h4>
+                            <div class="odg-list">
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/00547-A/025&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">06/12/2022 – 9/00547-A/025</a>Promozione cibi sostenibili e riduzione sprechi alimentari</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/00643-bis-AR/007&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">23/12/2022 – 9/00643-bis-AR/007</a>Modifica disposizioni in materia di controllo e contenimento della fauna selvatica</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/00730/035&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">11/01/2023 – 9/00730/035</a>Estensione contributo straordinario consumi energetici ai Consorzi di Bonifica</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01060-AR/041&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">18/05/2023 – 9/01060-AR/041</a>Ripristino credito d'imposta 40% per reti di imprese agricole per 2023</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01238/022&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">24/10/2023 – 9/01238/022</a>Finanziamento per acquisto macchinari riduzione ammoniaca per imprese zootecniche regioni Piemonte, Lombardia, Veneto e Emilia-Romagna</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/00752-A/001&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">09/11/2023 – 9/00752-A/001</a>Misure per favorire l'accesso al credito ai giovani imprenditori agricoli</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01437-A/009&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">14/11/2023 – 9/01437-A/009</a>Credito d'imposta per acquisto carburante per imprese esercenti attività della pesca</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01324/001&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">16/11/2023 – 9/01324/001</a>Richiedere parere scientifico all'Autorità europea su produzione di alimenti a base cellulare</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01627/012&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">29/12/2023 – 9/01627/012</a>Individuazione ulteriori stanziamenti per indennizzo ortofrutticolo</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01606-A/096&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">19/01/2024 – 9/01606-A/096</a>Inserire i salumifici tra i beneficiari agevolazioni per aziende energivore</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01304/007&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">07/02/2024 – 9/01304/007</a>Ripristino esenzione IRPEF giovani agricoltori</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/00851-A/010&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">09/04/2024 – 9/00851-A/010</a>Campagna di comunicazione istituzionale sui residui di pesticidi vietati in Italia</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01752-A/087&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">16/04/2024 – 9/01752-A/087</a>Estensione finanziamenti imprese agricole alle zone terremotate Emilia Romagna 2012</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01933/034&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">03/07/2024 – 9/01933/034</a>Investimenti sui sistemi irrigui del Mezzogiorno</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01946/022&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">11/07/2024 – 9/01946/022</a>Accesso a incentivi per imprese agricole vittime di gelate tardive</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01660-A/039&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">18/09/2024 – 9/01660-A/039</a>Valutazione degli effetti del divieto di lavorazione, cessione e commercio dei prodotti derivati da canapa</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/02066/035&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">03/10/2024 – 9/02066/035</a>Finanziamento opere di desalinizzazione e realizzazione bacini Regione Sicilia per crisi idrica</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/02088-AR/024&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">26/11/2024 – 9/02088-AR/024</a>Programmazione flussi lavoratori in agricoltura</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/02150/030&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">04/12/2024 – 9/02150/030</a>Scorrimento graduatoria contratti di filiera settore pesca, acquacoltura, silvicoltura, vivaismo</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/02164/036&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">10/12/2024 – 9/02164/036</a>Investimenti a favore del settore ortofrutticolo per strutture, mezzi colpiti da eventi alluvionali</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/02112-bis-A/050&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">20/12/2024 – 9/02112-bis-A/050</a>Stanziamento risorse a sostegno della filiera suinicola colpita da PSA</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/02184-A/006&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">17/02/2025 – 9/02184-A/006</a>Proroga pagamento contributi imprese agricole Emilia Romagna, Toscana, Marche</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/02245/037&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">19/02/2025 – 9/02245/037</a>Attivazione registro nazionale cereali</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/02333-A/024&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">08/05/2025 – 9/02333-A/024</a>Esclusione obbligo assicurativo imprese, cooperative pesca e acquacoltura</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/02355/074&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">27/05/2025 – 9/02355/074</a>Valutazione degli effetti del divieto di lavorazione, cessione e commercio dei prodotti derivati da canapa</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/02126-A/007&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">03/07/2025 – 9/02126-A/007</a>Istituzione fondo per ripristino, manutenzione di castagneti montani</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/02551/009&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">05/08/2025 – 9/02551/009</a>Misure a sostegno della filiera ortofrutticola dell'Emilia Romagna</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/02574-A/001&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">03/12/2025 – 9/02574-A/001</a>Contenimento e abbattimento ibridi lupo-cane, risorse per prevenzione delle predazioni</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/02678-A/005&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">10/12/2025 – 9/02678-A/005</a>Misure a sostegno della pesca</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/02750/007&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">29/12/2025 – 9/02750/007</a>Misure a favore settore lattiero e caseario</div>
+                            </div>
+                            <h4 style="margin-top:20px">Antonella Forattini</h4>
+                            <div class="odg-list">
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/00547-A/024&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">06/12/2022 – 9/00547-A/024</a>Promozione cibi sostenibili e riduzione sprechi alimentari</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/00643-bis-AR/006&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">23/12/2022 – 9/00643-bis-AR/006</a>Incrementare risorse e iniziative normative per equiparare imprenditori agromeccanici e agricoli professionali</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/00730/034&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">10/01/2023 – 9/00730/034</a>Proroga termini credito d'imposta per acquisto carburante agricolo</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/01195/008&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">08/06/2023 – 9/01195/008</a>Istituzione fondo per realizzazione vasche raccolta acque meteoriche per attività agricole</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/01194-AR/054&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">25/07/2023 – 9/01194-AR/054</a>Sostegno imprese acquacoltura dopo eventi alluvionali</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/00752-A/002&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">09/11/2023 – 9/00752-A/002</a>Reperimento fondi inserimento giovani in agricoltura</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/01324/003&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">16/11/2023 – 9/01324/003</a>Istituzione tavolo tecnico scientifico sulla carne coltivata</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/01551/001&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">22/11/2023 – 9/01551/001</a>Sostegno allevatori della filiera del latte</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/01627/015&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">29/12/2023 – 9/01627/015</a>Sostegno comparti agricoli e zootecnici in difficoltà reddituale</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/00851-A/002&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">09/04/2024 – 9/00851-A/002</a>Attuazione di campagne divulgative sulla diffusione della PSA</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/01946/019&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">11/07/2024 – 9/01946/019</a>Realizzazioni grandi invasi regioni insulari e meridionali</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/02164/037&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">10/12/2024 – 9/02164/037</a>Grandi invasi per riuso agricolo</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/02112-bis-A/049&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">20/12/2024 – 9/02112-bis-A/049</a>Agevolazioni fiscali aziende agricole e famiglie Aree interne</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/02184-A/007&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">17/02/2025 – 9/02184-A/007</a>Misure a favore settore agricolo colpito da crisi idrica</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/02551/008&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">05/08/2025 – 9/02551/008</a>Sostegno aziende colpite da malattie animali</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/02678-A/006&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">10/12/2025 – 9/02678-A/006</a>Sostegno alla filera del latte</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/02750/006&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">29/12/2025 – 9/02750/006</a>Liberalizzazione derivati da canapa</div>
+                            </div>
+                        </div>
+                        <div class="odg-deputy">
+                            <h4>Maria Stefania Marino</h4>
+                            <div class="odg-list">
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/00547-A/023&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">06/12/2022 – 9/00547-A/023</a>Cibo sostenibile e spreco alimentare</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/00643-bis-AR/008&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">23/12/2022 – 9/00643-bis-AR/008</a>Sostegno sistema agricolo e agroalimentare Mezzogiorno</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/00730/037&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">11/01/2023 – 9/00730/037</a>Promozione imprenditoria giovanile agricola</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01114-A/060&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">06/06/2023 – 9/01114-A/060</a>Sostegno imprenditoria femminile in agricoltura</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01195/007&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">08/06/2023 – 9/01195/007</a>Sostegno ricerca su infrastrutture idriche</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01194-AR/057&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">25/07/2023 – 9/01194-AR/057</a>Finanziamento interventi approvigionamento irriguo</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01416-A/065&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">30/10/2023 – 9/01416-A/065</a>Aree interne</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/00752-A/003&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">09/11/2023 – 9/00752-A/003</a>Risorse aggiuntive Fondo rotativo per imprenditoria femminile in agricoltura</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01324/004&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">16/11/2023 – 9/01324/004</a>Libera circolazione alimenti sicuri</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01551/030&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">22/11/2023 – 9/01551/030</a>Sostegno comparto filiera pesca</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01627/014&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">29/12/2023 – 9/01627/014</a>Misure straordinarie sostegno comparto pesca</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/00851-A/011&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">09/04/2024 – 9/00851-A/011</a>Campagne divulgative su speculazioni prezzo grano</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01752-A/131&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">16/04/2024 – 9/01752-A/131</a>Risorse aggiuntive per settore agroalimentare</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01946/024&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">11/07/2024 – 9/01946/024</a>Istituzione fondo per danni causati da fauna selvatica</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01606-A/095&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">25/11/2024 – 9/01606-A/095</a>Modifica articolo 2135 codice civile</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/02750/008&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">19/12/2025 – 9/02750/008</a>Sostegno comparto produttivo frutticolo</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/02758/002&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">14/01/2026 – 9/02758/002</a>Produzione energia da biomasse</div>
+                            </div>
+                            <h4 style="margin-top:20px">Nadia Romeo</h4>
+                            <div class="odg-list">
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/01946/025&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">11/07/2024 – 9/01946/025</a>Sostegno ai consorzi colpiti da granchio blu</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/02245/042&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">19/02/2025 – 9/02245/042</a>Richiesta emanazione decreto attuativo revisione mezzi agricoli</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/02333-A/003&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">08/05/2025 – 9/02333-A/003</a>Estensione obbligo assicurativo eventi calamitosi</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/01806/004&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">27/11/2025 – 9/01806/004</a>Bracconaggio ittico</div>
+                                <div class="odg-item"><a href="https://aic.camera.it/aic/scheda.html?numero=9/02758/031&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="odg-code">14/01/2026 – 9/02758/031</a>Fonti rinnovabili e tutela del paesaggio e della biodiversità</div>
+                            </div>
+                            <h4 style="margin-top:20px">Andrea Rossi</h4>
+                            <div class="odg-list">
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/00547-A/026&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">06/12/2022 – 9/00547-A/026</a>Valorizzazione cibo sostenibile</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/00643-bis-AR/005&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">23/12/2022 – 9/00643-bis-AR/005</a>Risorse per industrializzazione processi vertical farm</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/00730/036&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">11/01/2023 – 9/00730/036</a>Credito imposta per acquisto mezzi di produzione agricola</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01195/009&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">09/06/2023 – 9/01195/009</a>Incremento fondo solidarietà per crisi idrica</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01194-AR/055&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">25/07/2023 – 9/01194-AR/055</a>Sostegni e incentivi settore frutticolo</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/00752-A/004&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">09/11/2023 – 9/00752-A/004</a>Credito imposta per beni strumentali e materiali per aziende agricole</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01324/002&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">16/11/2023 – 9/01324/002</a>Campagna informazione sicurezza alimentare</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01627/013&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">29/12/2023 – 9/01627/013</a>Contributo pubblico per polizze assicurative sottoscritte da agricoltori</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/01606-A/094&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">25/01/2024 – 9/01606-A/094</a>Autopruduzione energia per imprese agricole</div>
+                                <div class="odg-item"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=si&idDocumento=9/00851-A/009&http_referer=www.camera.it" target="_blank" rel="noopener" class="odg-code">09/04/2024 – 9/00851-A/009</a>Sostegno imprese per proliferazione granchio blu</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROPOSTE DI LEGGE -->
+        <div class="acc-panel" id="panel-pdl">
+            <button class="acc-trigger" data-panel="pdl">
+                <div class="acc-trigger-left">
+                    <span class="acc-num">15</span>
+                    <span class="acc-title">Proposte di Legge</span>
+                </div>
+                <div class="acc-chevron">
+                    <svg viewBox="0 0 12 8"><polyline points="1,1 6,7 11,1"/></svg>
+                </div>
+            </button>
+            <div class="acc-body" id="body-pdl">
+                <div class="acc-inner">
+                    <div class="leg-list">
+                        <div class="leg-item"><span class="leg-date">13/02/2024</span><div class="leg-content"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=pdl&idDocumento=1706&http_referer=www.camera.it" target="_blank" rel="noopener" class="leg-ref">A.C. 1706</a><div class="leg-title">Disposizioni in materia di coltivazione e lavorazione del bambù</div><div class="leg-authors">Antonella Forattini, Stefano Vaccari, Maria Stefania Marino, Andrea Rossi</div></div></div>
+                        <div class="leg-item"><span class="leg-date">14/12/2023</span><div class="leg-content"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=pdl&idDocumento=1612&http_referer=www.camera.it" target="_blank" rel="noopener" class="leg-ref">A.C. 1612</a><div class="leg-title">Disposizioni in materia di ricerca, raccolta, coltivazione e commercio dei tartufi destinati al consumo</div><div class="leg-authors">Antonella Forattini, Stefano Vaccari, Maria Stefania Marino, Andrea Rossi</div></div></div>
+                        <div class="leg-item"><span class="leg-date">12/07/2023</span><div class="leg-content"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=pdl&idDocumento=1292&http_referer=www.camera.it" target="_blank" rel="noopener" class="leg-ref">A.C. 1292</a><div class="leg-title">Disposizioni concernenti la coltivazione e la somministrazione della cannabis a uso medico</div><div class="leg-authors">Antonella Forattini, Andrea Rossi</div></div></div>
+                        <div class="leg-item"><span class="leg-date">10/02/2025</span><div class="leg-content"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=pdl&idDocumento=2233&http_referer=www.camera.it" target="_blank" rel="noopener" class="leg-ref">A.C. 2233</a><div class="leg-title">Disposizioni per la tutela dell'agricoltura eroica</div><div class="leg-authors">Stefano Vaccari, Maria Stefania Marino, Nadia Romeo, Andrea Rossi</div></div></div>
+                        <div class="leg-item"><span class="leg-date">05/12/2024</span><div class="leg-content"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=pdl&idDocumento=2165&http_referer=www.camera.it" target="_blank" rel="noopener" class="leg-ref">A.C. 2165</a><div class="leg-title">Modifica all'articolo 8 del decreto-legge 13 settembre 2012, n. 158, convertito, con modificazioni, dalla legge 8 novembre 2012, n. 189, in materia di etichettatura dei prodotti caseari a base di latte crudo</div><div class="leg-authors">Stefano Vaccari, Antonella Forattini, Maria Stefania Marino, Nadia Romeo, Andrea Rossi</div></div></div>
+                        <div class="leg-item"><span class="leg-date">06/08/2024</span><div class="leg-content"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=pdl&idDocumento=2012&http_referer=www.camera.it" target="_blank" rel="noopener" class="leg-ref">A.C. 2012</a><div class="leg-title">Disciplina della pesca ricreativa in mare e disposizioni per la salvaguardia della fauna ittica e dell'ecosistema marino</div><div class="leg-authors">Stefano Vaccari, Antonella Forattini, Maria Stefania Marino, Nadia Romeo, Andrea Rossi</div></div></div>
+                        <div class="leg-item"><span class="leg-date">15/09/2023</span><div class="leg-content"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=pdl&idDocumento=1412&http_referer=www.camera.it" target="_blank" rel="noopener" class="leg-ref">A.C. 1412</a><div class="leg-title">Istituzione di un piano nazionale per la promozione e il sostegno dell'agricoltura e dell'attività forestale nelle aree rurali interne</div><div class="leg-authors">Stefano Vaccari, Antonella Forattini, Maria Stefania Marino, Andrea Rossi</div></div></div>
+                        <div class="leg-item"><span class="leg-date">21/11/2022</span><div class="leg-content"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=pdl&idDocumento=608&http_referer=www.camera.it" target="_blank" rel="noopener" class="leg-ref">A.C. 608</a><div class="leg-title">Interventi per la riduzione della popolazione dei cinghiali nel territorio nazionale e delega al Governo per la prevenzione, il contenimento e il ristoro dei danni arrecati dalla fauna selvatica alle attività agricole</div><div class="leg-authors">Stefano Vaccari, Antonella Forattini, Maria Stefania Marino, Andrea Rossi</div></div></div>
+                        <div class="leg-item"><span class="leg-date">17/06/2025</span><div class="leg-content"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=pdl&idDocumento=2465&http_referer=www.camera.it" target="_blank" rel="noopener" class="leg-ref">A.C. 2465</a><div class="leg-title">Disciplina dell'ippicoltura nonché disposizioni per la promozione delle attività equestri e il benessere degli equidi</div><div class="leg-authors">Marco Simiani, Stefano Vaccari, Antonella Forattini, Andrea Rossi</div></div></div>
+                        <div class="leg-item"><span class="leg-date">27/03/2025</span><div class="leg-content"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=pdl&idDocumento=2326&http_referer=www.camera.it" target="_blank" rel="noopener" class="leg-ref">A.C. 2326</a><div class="leg-title">Modifiche al comma 55 dell'articolo 1 della legge 24 dicembre 2007, n. 247, concernenti il calcolo del trattamento di disoccupazione per gli operai agricoli</div><div class="leg-authors">Marco Lacarra, Stefano Vaccari, Antonella Forattini, Maria Stefania Marino, Nadia Romeo, Andrea Rossi</div></div></div>
+                        <div class="leg-item"><span class="leg-date">05/03/2025</span><div class="leg-content"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=pdl&idDocumento=2290&http_referer=www.camera.it" target="_blank" rel="noopener" class="leg-ref">A.C. 2290</a><div class="leg-title">Disposizioni per la tutela dell'agricoltura eroica</div><div class="leg-authors">Valentina Ghio, Stefano Vaccari, Antonella Forattini, Maria Stefania Marino, Nadia Romeo, Andrea Rossi</div></div></div>
+                        <div class="leg-item"><span class="leg-date">04/08/2023</span><div class="leg-content"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=pdl&idDocumento=1370&http_referer=www.camera.it" target="_blank" rel="noopener" class="leg-ref">A.C. 1370</a><div class="leg-title">Disposizioni concernenti la prevenzione e il controllo della proliferazione di canidi derivanti dai processi di ibridazione del lupo nonché la prevenzione e l'indennizzo dei danni alle imprese zootecniche</div><div class="leg-authors">Marco Simiani, Stefano Vaccari, Maria Stefania Marino, Andrea Rossi, Antonella Forattini</div></div></div>
+                        <div class="leg-item"><span class="leg-date">26/05/2023</span><div class="leg-content"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=pdl&idDocumento=1179&http_referer=www.camera.it" target="_blank" rel="noopener" class="leg-ref">A.C. 1179</a><div class="leg-title">Disposizioni per il contenimento del consumo di suolo e la rigenerazione urbana</div><div class="leg-authors">Chiara Braga, Andrea Rossi, Stefano Vaccari</div></div></div>
+                        <div class="leg-item"><span class="leg-date">17/10/2023</span><div class="leg-content"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=pdl&idDocumento=1489&http_referer=www.camera.it" target="_blank" rel="noopener" class="leg-ref">A.C. 1489</a><div class="leg-title">Introduzione dell'insegnamento dell'educazione alimentare nella scuola primaria e nella scuola secondaria di primo grado</div><div class="leg-authors">Andrea Rossi, Stefano Vaccari, Maria Stefania Marino, Antonella Forattini</div></div></div>
+                        <div class="leg-item"><span class="leg-date">24/11/2022</span><div class="leg-content"><a href="https://documenti.camera.it/apps/CommonServices/getDocumento.ashx?sezione=lavori&idLegislatura=19&tipoDoc=pdl&idDocumento=627&http_referer=www.camera.it" target="_blank" rel="noopener" class="leg-ref">A.C. 627</a><div class="leg-title">Disposizioni per la promozione del lavoro e dell'imprenditoria femminile nel settore dell'agricoltura, delle foreste, della pesca e dell'acquacoltura</div><div class="leg-authors">Maria Stefania Marino, Antonella Forattini, Stefano Vaccari, Andrea Rossi</div></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INTERROGAZIONI -->
+        <div class="acc-panel" id="panel-int">
+            <button class="acc-trigger" data-panel="int">
+                <div class="acc-trigger-left">
+                    <span class="acc-num">13</span>
+                    <span class="acc-title">Interrogazioni</span>
+                </div>
+                <div class="acc-chevron">
+                    <svg viewBox="0 0 12 8"><polyline points="1,1 6,7 11,1"/></svg>
+                </div>
+            </button>
+            <div class="acc-body" id="body-int">
+                <div class="acc-inner">
+                    <div class="leg-list">
+                        <div class="leg-item"><span class="leg-date">24/01/2023</span><div class="leg-content"><a href="https://aic.camera.it/aic/scheda.html?core=aic&numero=5/00288&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="leg-ref">5/00288</a><div class="leg-title">Sulle misure a sostegno dell'intero comparto ippico oggi in forte sofferenza, anche al fine di valorizzare le capacità organizzative e i servizi resi riferiti alle singole giornate di corsa effettuate e non il dato dei cavalli medi partenti su base annua</div></div></div>
+                        <div class="leg-item"><span class="leg-date">11/07/2023</span><div class="leg-content"><a href="https://aic.camera.it/aic/scheda.html?core=aic&numero=5/01096&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="leg-ref">5/01096</a><div class="leg-title">Sulle nuove e ulteriori risorse finanziarie necessarie a sostenere e a rilanciare la filiera agricola e le aziende agricole colpite dagli eventi alluvionali.</div></div></div>
+                        <div class="leg-item"><span class="leg-date">26/07/2023</span><div class="leg-content"><a href="https://aic.camera.it/aic/scheda.html?core=aic&numero=5/01185&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="leg-ref">5/01185</a><div class="leg-title">Sul finanziamento e sul rilancio dei programmi di investimento produttivi finalizzati al rafforzamento delle filiere produttive agroalimentari escluse dal finanziamento</div></div></div>
+                        <div class="leg-item"><span class="leg-date">16/01/2024</span><div class="leg-content"><a href="https://aic.camera.it/aic/scheda.html?core=aic&numero=5/01838&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="leg-ref">5/01838</a><div class="leg-title">Sullo stato di avanzamento per ogni singola misura del PNRR presso il Masaf.</div></div></div>
+                        <div class="leg-item"><span class="leg-date">07/05/2024</span><div class="leg-content"><a href="https://aic.camera.it/aic/scheda.html?core=aic&numero=5/02332&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="leg-ref">5/02332</a><div class="leg-title">Sulle risorse disponibili per finanziare gli interventi programmati e quali nuovi interventi siano stati individuati e con quali risorse verranno finanziati per contrastare la scarsità idrica ai fini del potenziamento e dell'adeguamento delle infrastrutture idriche necessarie al comparto agricolo.</div></div></div>
+                        <div class="leg-item"><span class="leg-date">16/09/2024</span><div class="leg-content"><a href="https://aic.camera.it/aic/scheda.html?core=aic&numero=5/02802&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="leg-ref">5/02802</a><div class="leg-title">Sull'ammodernamento e l'efficientamento del servizio di irrigazione collettiva, per l'incremento delle disponibilità di acqua, per l'efficientamento delle reti e relativi sistemi di gestione e monitoraggio, al fine di ottimizzare il risparmio idrico.</div></div></div>
+                        <div class="leg-item"><span class="leg-date">19/11/2024</span><div class="leg-content"><a href="https://aic.camera.it/aic/scheda.html?core=aic&numero=5/03135&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="leg-ref">5/03135</a><div class="leg-title">Sulla crisi del settore della canapa industriale</div></div></div>
+                        <div class="leg-item"><span class="leg-date">14/01/2025</span><div class="leg-content"><a href="https://aic.camera.it/aic/scheda.html?core=aic&numero=5/03339&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="leg-ref">5-03339</a><div class="leg-title">Sull'inquinamento del libro genealogico dell'Enci</div></div></div>
+                        <div class="leg-item"><span class="leg-date">04/02/2025</span><div class="leg-content"><a href="https://aic.camera.it/aic/scheda.html?core=aic&numero=5/03475&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="leg-ref">5/03475</a><div class="leg-title">Sulla definizione dei processi riorganizzativi, amministrativi e contabili di Agea in coerenza con le norme e i regolamenti interni esistenti, con particolare riferimento alle conseguenze dell'incorporazione di Sin Spa in Agea.</div></div></div>
+                        <div class="leg-item"><span class="leg-date">25/02/2025</span><div class="leg-content"><a href="https://aic.camera.it/aic/scheda.html?core=aic&numero=5/03624&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="leg-ref">5/03624</a><div class="leg-title">Sulla nomina del commissario ad acta al fine di verificare la conformità delle attività gestionali dell'Enci in coerenza con la normativa vigente.</div></div></div>
+                        <div class="leg-item"><span class="leg-date">15/04/2025</span><div class="leg-content"><a href="https://aic.camera.it/aic/scheda.html?core=aic&numero=5/03875&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="leg-ref">5/03875</a><div class="leg-title">Sulla crisi del settore della canapa industriale in seguito all'approvazione del decreto-legge n. 48 del 2025.</div></div></div>
+                        <div class="leg-item"><span class="leg-date">18/11/2025</span><div class="leg-content"><a href="https://aic.camera.it/aic/scheda.html?core=aic&numero=5/04701&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="leg-ref">5/04701</a><div class="leg-title">Sulle filiere ittiche nazionali lavoro e reddito, per ridare nuovo slancio competitivo al settore, stare al passo con il mercato e attrarre giovani, garantendo così un futuro al comparto.</div></div></div>
+                        <div class="leg-item"><span class="leg-date">02/02/2026</span><div class="leg-content"><a href="https://aic.camera.it/aic/scheda.html?core=aic&numero=5/04982&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="leg-ref">5/04982</a><div class="leg-title">Sulla necessità di estendere i meccanismi di flessibilità previsti per l'agricoltura su base paritaria anche alla pesca e all'acquacoltura, assicurando al settore l'accesso a strumenti finanziari straordinari per affrontare le stesse crisi globali e le perturbazioni di mercato che colpiscono l'intera filiera agroalimentare.</div></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MOZIONI -->
+        <div class="acc-panel" id="panel-moz">
+            <button class="acc-trigger" data-panel="moz">
+                <div class="acc-trigger-left">
+                    <span class="acc-num">3</span>
+                    <span class="acc-title">Mozioni</span>
+                </div>
+                <div class="acc-chevron">
+                    <svg viewBox="0 0 12 8"><polyline points="1,1 6,7 11,1"/></svg>
+                </div>
+            </button>
+            <div class="acc-body" id="body-moz">
+                <div class="acc-inner">
+                    <div class="leg-list">
+                        <div class="leg-item"><span class="leg-date">22/02/2023</span><div class="leg-content"><a href="https://aic.camera.it/aic/scheda.html?core=aic&numero=1/00073&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="leg-ref">1/00073</a><div class="leg-title">Crisi idrica e siccità</div></div></div>
+                        <div class="leg-item"><span class="leg-date">14/10/2025</span><div class="leg-content"><a href="https://aic.camera.it/aic/scheda.html?core=aic&numero=1/00504&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="leg-ref">1/00504</a><div class="leg-title">Riforma Politica Agricola Comune</div></div></div>
+                        <div class="leg-item"><span class="leg-date">25/03/2024</span><div class="leg-content"><a href="https://aic.camera.it/aic/scheda.html?core=aic&numero=7/00209&ramo=CAMERA&leg=19" target="_blank" rel="noopener" class="leg-ref">7/00209</a><div class="leg-title">Albo nazionale agromeccanici</div></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EVENTI -->
+        <div class="acc-panel" id="panel-eve">
+            <button class="acc-trigger" data-panel="eve">
+                <div class="acc-trigger-left">
+                    <span class="acc-num">5</span>
+                    <span class="acc-title">Eventi</span>
+                </div>
+                <div class="acc-chevron">
+                    <svg viewBox="0 0 12 8"><polyline points="1,1 6,7 11,1"/></svg>
+                </div>
+            </button>
+            <div class="acc-body" id="body-eve">
+                <div class="acc-inner">
+                    <div class="leg-list">
+                        <div class="leg-item"><span class="leg-date">07/06/2023</span><div class="leg-content"><div class="leg-title">Conferenza stampa sulla crisi della produzione cerasicola</div></div></div>
+                        <div class="leg-item"><span class="leg-date">01/09/2024</span><div class="leg-content"><div class="leg-title">Campagna di ascolto nei confronti delle maggiori associazioni agricole e zootecniche nazionali sul tema della Peste suina africana</div></div></div>
+                        <div class="leg-item"><span class="leg-date">23/07/2024</span><div class="leg-content"><div class="leg-title">Evento alla Camera - Con l'agricoltura verso il futuro</div></div></div>
+                        <div class="leg-item"><span class="leg-date">08/04/2025</span><div class="leg-content"><div class="leg-title">Evento alla Camera - Il contributo (decisivo) della scienza nella gestione della fauna selvatica</div></div></div>
+                        <div class="leg-item"><span class="leg-date">16/12/2025</span><div class="leg-content"><div class="leg-title">Evento alla Camera - Dal caporalato alla legalità. Il lavoro che fa crescere l'Italia</div></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /accordion -->
+</section>
+
+<!-- ══ LE TAPPE ══════════════════════════════ -->
+<section id="tappe" class="events">
+    <div class="events-top">
+        <div class="events-top-left">
+            <div class="kicker">Agrotour 2026 · Commissione Agricoltura</div>
+            <h2>LOMBARDIA</h2>
+            <div class="events-dates">26 – 27 Marzo 2026</div>
+        </div>
+        <div class="events-top-right">
+            <img src="assets/agrotour_white.svg" alt="Agrotour 2026" style="height:clamp(40px,5vw,60px);">
+        </div>
+    </div>
+
+    <div class="events-grid">
+        <div class="events-day-label" data-reveal><span>26 Marzo</span></div>
+
+        <div class="event-card" data-reveal="0.1">
+            <div class="event-time">Ore 15.00</div>
+            <div class="event-pin">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <div class="event-city">VALEGGIO (PV)</div>
+            </div>
+            <div class="event-venue">Cascina Tessera<br>Azienda agricola Marta Sempio</div>
+        </div>
+
+        <div class="event-card" data-reveal="0.2">
+            <div class="event-time">Ore 18.00</div>
+            <div class="event-pin">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <div class="event-city">BRONI (PV)</div>
+            </div>
+            <div class="event-venue">Incontro pubblico con i produttori dell'Oltrepò pavese</div>
+        </div>
+
+        <div class="event-card" data-reveal="0.3">
+            <div class="event-time">Ore 20.00</div>
+            <div class="event-pin">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <div class="event-city">CASTEGGIO (PV)</div>
+            </div>
+            <div class="event-venue">Azienda agricola Prime Alture</div>
+        </div>
+
+        <div class="events-day-label" data-reveal><span>27 Marzo</span></div>
+
+        <div class="event-card" data-reveal="0.1">
+            <div class="event-time">Ore 9.45</div>
+            <div class="event-pin">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <div class="event-city">PERSICO DOSIMO (CR)</div>
+            </div>
+            <div class="event-venue">Fattorie Cremona PLAC</div>
+        </div>
+
+        <div class="event-card" data-reveal="0.2">
+            <div class="event-time">Ore 14.00</div>
+            <div class="event-pin">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <div class="event-city">PEGOGNAGA (MN)</div>
+            </div>
+            <div class="event-venue">Cooperativa San Lorenzo</div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ IL GRUPPO PD ══════════════════════════ -->
+<section id="gruppo" class="gruppo">
+    <div class="gruppo-top" data-reveal>
+        <div class="kicker">XIX Legislatura</div>
+        <h2>Il Gruppo PD in<br><span>Commissione Agricoltura</span></h2>
+        <p>I deputati che portano avanti le battaglie del PD per l'agroalimentare italiano alla Camera dei Deputati.</p>
+    </div>
+
+    <div class="deputies-grid">
+        <div class="dep-card" data-reveal>
+            <div class="dep-avatar"><img src="assets/antonella-forattini.jpg" alt="Antonella Forattini"></div>
+            <div class="dep-name">Antonella FORATTINI</div>
+            <div class="dep-city">Mantova</div>
+            <div class="dep-contacts">
+                <a href="https://www.instagram.com/aforattini" target="_blank" rel="noopener"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>@aforattini</a>
+                <a href="https://www.facebook.com/antonella.forattini.mantova" target="_blank" rel="noopener"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>@antonella.forattini.mantova</a>
+                <a href="mailto:forattini_a@camera.it"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>forattini_a@camera.it</a>
+            </div>
+        </div>
+
+        <div class="dep-card" data-reveal="0.1">
+            <div class="dep-avatar"><img src="assets/stefania-marino.jpg" alt="Maria Stefania Marino"></div>
+            <div class="dep-name">Maria Stefania MARINO</div>
+            <div class="dep-city">Enna</div>
+            <div class="dep-contacts">
+                <a href="https://www.instagram.com/mariastefaniamarino" target="_blank" rel="noopener"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>@mariastefaniamarino</a>
+                <a href="https://www.facebook.com/stefaniammarino" target="_blank" rel="noopener"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>@stefaniammarino</a>
+                <a href="mailto:marino_m@camera.it"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>marino_m@camera.it</a>
+            </div>
+        </div>
+
+        <div class="dep-card" data-reveal="0.2">
+            <div class="dep-avatar"><img src="assets/nadia-romeo.jpg" alt="Nadia Romeo"></div>
+            <div class="dep-name">Nadia ROMEO</div>
+            <div class="dep-city">Rovigo</div>
+            <div class="dep-contacts">
+                <a href="https://www.instagram.com/nadia230671" target="_blank" rel="noopener"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>@nadia230671</a>
+                <a href="https://www.facebook.com/nadia.romeo.5" target="_blank" rel="noopener"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>@nadia.romeo.5</a>
+                <a href="mailto:romeo_n@camera.it"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>romeo_n@camera.it</a>
+            </div>
+        </div>
+
+        <div class="dep-card" data-reveal="0.3">
+            <div class="dep-avatar"><img src="assets/andrea-rossi.png" alt="Andrea Rossi"></div>
+            <div class="dep-name">Andrea ROSSI</div>
+            <div class="dep-city">Scandiano (RE)</div>
+            <div class="dep-contacts">
+                <a href="https://www.instagram.com/andrea_rossi76" target="_blank" rel="noopener"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>@andrea_rossi76</a>
+                <a href="https://www.facebook.com/AndreaRossiPD" target="_blank" rel="noopener"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>@AndreaRossiPD</a>
+                <a href="mailto:rossi_andrea@camera.it"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>rossi_andrea@camera.it</a>
+            </div>
+        </div>
+
+        <div class="dep-card" data-reveal="0.4">
+            <div class="dep-avatar"><img src="assets/stefano-vaccari.jpg" alt="Stefano Vaccari"></div>
+            <div class="dep-name">Stefano VACCARI</div>
+            <div class="dep-city">Modena</div>
+            <div class="dep-contacts">
+                <a href="https://www.instagram.com/stefanovaccari_parlamentare" target="_blank" rel="noopener"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>@stefanovaccari_parlamentare</a>
+                <a href="https://www.facebook.com/vaccari.s" target="_blank" rel="noopener"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>@vaccari.s</a>
+                <a href="mailto:vaccari_s@camera.it"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>vaccari_s@camera.it</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ FOOTER ════════════════════════════════ -->
+<footer>
+    <div style="display:flex;align-items:center;gap:10px;">
+        <img src="assets/gruppopd.svg" alt="Gruppo PD" style="height:42px; filter:brightness(0) invert(1);">
+    </div>
+    <p class="foot-copy">Viaggio tra le realtà agroalimentari<br>del Paese tra mercati e futuro</p>
+</footer>
+
+<script>
+// Scroll reveal
+const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+
+// Nav: transparent → solid on scroll
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// Nav active link on scroll
+const sections = ['cose','attivita','tappe','gruppo'];
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+    let cur = 'cose';
+    sections.forEach(id => {
+        const el = document.getElementById(id);
+        if(el && window.scrollY >= el.offsetTop - 120) cur = id;
+    });
+    navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
+    });
+}, { passive: true });
+
+// Counter animation (scrolling numbers)
+const counterSection = document.querySelector('.counters');
+let counterAnimated = false;
+const counterObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting && !counterAnimated) {
+            counterAnimated = true;
+            document.querySelectorAll('.counter-num[data-count]').forEach(el => {
+                const target = parseInt(el.dataset.count);
+                const duration = 1600;
+                const start = performance.now();
+                function step(now) {
+                    const progress = Math.min((now - start) / duration, 1);
+                    const ease = 1 - Math.pow(1 - progress, 3);
+                    el.textContent = Math.round(target * ease);
+                    if (progress < 1) requestAnimationFrame(step);
+                }
+                requestAnimationFrame(step);
+            });
+        }
+    });
+}, { threshold: 0.3 });
+if (counterSection) counterObserver.observe(counterSection);
+
+// Counter click → open accordion panel
+document.querySelectorAll('.counter-item').forEach(item => {
+    item.addEventListener('click', () => {
+        const target = item.dataset.target;
+        document.querySelectorAll('.counter-item').forEach(c => c.classList.remove('active'));
+        item.classList.add('active');
+        // open matching panel
+        openPanel(target);
+        // scroll to accordion
+        document.querySelector('.accordion').scrollIntoView({ behavior:'smooth', block:'nearest' });
+    });
+});
+
+// Accordion
+function openPanel(id) {
+    document.querySelectorAll('.acc-trigger').forEach(btn => {
+        const panelId = btn.dataset.panel;
+        const body = document.getElementById('body-' + panelId);
+        const isTarget = panelId === id;
+        btn.classList.toggle('open', isTarget);
+        body.classList.toggle('open', isTarget);
+    });
+}
+
+document.querySelectorAll('.acc-trigger').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const id = btn.dataset.panel;
+        const isOpen = btn.classList.contains('open');
+        // sync counter highlight
+        document.querySelectorAll('.counter-item').forEach(c => {
+            c.classList.toggle('active', c.dataset.target === id && !isOpen);
+        });
+        if(isOpen) {
+            btn.classList.remove('open');
+            document.getElementById('body-' + id).classList.remove('open');
+        } else {
+            openPanel(id);
+        }
+    });
+});
+
+// Hamburger menu
+const burger = document.getElementById('nav-burger');
+const navLinksEl = document.getElementById('nav-links');
+burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    navLinksEl.classList.toggle('open');
+});
+navLinksEl.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+        burger.classList.remove('open');
+        navLinksEl.classList.remove('open');
+    });
+});
+</script>
+
+</body>
+</html>
